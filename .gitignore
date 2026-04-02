@@ -1,0 +1,17 @@
+#Secrets
+.env
+*.pem
+*.key
+
+node_modules
+nbuild
+npm-debug.log
+.DS_Store
+.cache
+.terraform
+
+
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json

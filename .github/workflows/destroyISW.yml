@@ -1,0 +1,22 @@
+name: ISW destroy
+
+on:
+  pull_request:
+    branches:
+        - 'main'
+  workflow_dispatch:
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ISW/terraform
+    env:
+      TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve

@@ -1,0 +1,57 @@
+on:
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - 'ISW/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+jobs:
+  server-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ISW/terraform
+    env:
+      TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+        - name: Setup terraform
+          uses: hashicorp/setup-terraform@v3
+        
+        - name: Deploying Infrastructure
+
+          run: terraform init -reconfigure
+        - run: terraform plan -input=false
+        - run: terraform apply -auto-approve -input=false
+        
+  registry-login:
+    needs: 'server-deploy'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN }}
+      
+      - name: Log in DO registry
+        run: |
+          snap connect doctl:dot-docker
+          doctl registry login
+
+
+      - name: Building Compose containers
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets }}
+          username: root
+          key: ${{ secrets }}
+          source: "ISW/main/docker-compose.yml"
+          target: "/root/app/"
