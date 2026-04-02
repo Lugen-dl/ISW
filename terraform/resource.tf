@@ -13,7 +13,6 @@ user_data = <<-_EOF_
 sudo apt update
 snap install doctl 
 
-
 _EOF_
 }
 

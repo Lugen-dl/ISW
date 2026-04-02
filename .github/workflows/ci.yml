@@ -28,30 +28,60 @@ jobs:
           run: terraform init -reconfigure
         - run: terraform plan -input=false
         - run: terraform apply -auto-approve -input=false
-        
-  registry-login:
+
+        - name: Update secrets
+          run: |
+            IP=$(terraform output -raw droplet_ip)
+            KEY=$(terraform output -raw private_key)
+            gh secret set DROPLET_IP --body "$IP"
+            gh secret set SSH_PRIVATE_KEY --boy "$KEY"
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     
+  container-deployment:
     needs: 'server-deploy'
     runs-on: ubuntu-latest
-
+    
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
+      - name: Connect to server
+        uses: appleboy/ssh-action@master
         with:
-          token: ${{ secrets.DO_TOKEN }}
-      
-      - name: Log in DO registry
-        run: |
-          snap connect doctl:dot-docker
-          doctl registry login
-
-
-      - name: Building Compose containers
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets }}
+          host: ${{ secrets.DROPLET_IP }}
           username: root
-          key: ${{ secrets }}
-          source: "ISW/main/docker-compose.yml"
-          target: "/root/app/"
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            git clone https://github.com/Lugen-dl/ISW.git /root/app
+            cd /root/app
+            docker compose up -d --build
+
+          
+
+
+#  registry-login:
+#    needs: 'server-deploy'
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Install doctl
+#        uses: digitalocean/action-doctl@v2
+#        with:
+#          token: ${{ secrets.DO_TOKEN }}
+#      
+#      - name: Log in DO registry
+#        run: |
+#          snap connect doctl:dot-docker
+#          doctl registry login
+#
+#
+#      - name: Building Compose containers
+#        uses: appleboy/scp-action@v0.1.7
+#        with:
+#          host: ${{ secrets }}
+#          username: root
+#          key: ${{ secrets }}
+#          source: "ISW/main/docker-compose.yml"
+#          target: "/root/app/"
