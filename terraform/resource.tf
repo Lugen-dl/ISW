@@ -4,7 +4,7 @@ resource "digitalocean_droplet" "web" {
     image = "docker-20-04"
     region = var.region
 
-    ssh_keys = [ digitalocean_ssh_key.ssh_id.id ]
+    ssh_keys = [ digitalocean_ssh_key.default.id ]
     tags = [ var.tagging ]
   
 user_data = <<-_EOF_
@@ -31,7 +31,8 @@ module "s3" {
 
   #What will be stored in bucket
   ssh_key = tls_private_key.private_key.private_key_pem
-  ssh_path = "keys/pub_key"
+  ssh_path = "keys/id_rsa"
+
 }
 
 module "registry" {

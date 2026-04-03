@@ -27,3 +27,13 @@ variable "registry_name" {
   type = string
   default = true
 }
+
+variable "secret" {
+  default = true
+  sensitive = true
+}
+
+variable "access" {
+  type = string
+  default = true
+}

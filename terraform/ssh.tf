@@ -1,9 +1,11 @@
+#Creating private key
 resource "tls_private_key" "private_key" {
   algorithm = "RSA"
   rsa_bits = 4096
 }
 
-resource "digitalocean_ssh_key" "ssh_id" {
+#Creating pub key
+resource "digitalocean_ssh_key" "default" {
   name = "pub_key"
   public_key = tls_private_key.private_key.public_key_openssh
 }
