@@ -24,10 +24,15 @@ module "firewall" {
   ld_id = module.loadblancer.lb_id
 }
 
-#module "s3" {
-#  source = "./module/s3bucket"
-#  tag = var.tagging
-#}
+module "s3" {
+  source = "./module/s3bucket"
+  tag = var.tagging
+  region = var.region
+
+  #What will be stored in bucket
+  ssh_key = tls_private_key.private_key.private_key_pem
+  ssh_path = "keys/pub_key"
+}
 
 module "registry" {
   source = "./module/registry"
@@ -47,6 +52,10 @@ module "loadblancer" {
 
 resource "digitalocean_tag" "master_tag" {
   name = var.tagging
+}
+
+output "ip" {
+  value = digitalocean_droplet.web.ipv4_address
 }
 
 data "http" "http_id" {

@@ -9,8 +9,9 @@ terraform {
 
 resource "digitalocean_spaces_bucket" "bucket_id" {
   name = "unique-s3-bucket-isw"
-  region = "fra1"
-  acl = "public-read"
+  region = var.region
+  acl = "private"
+
 }
 
 output "bucket" {

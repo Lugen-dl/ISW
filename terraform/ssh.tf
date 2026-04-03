@@ -8,8 +8,10 @@ resource "digitalocean_ssh_key" "ssh_id" {
   public_key = tls_private_key.private_key.public_key_openssh
 }
 
-resource "local_file" "tls_file_id" {
-  content = tls_private_key.private_key.private_key_pem
-  filename = "${path.module}/id_rsa_do"
-  file_permission = "0600"
-}
+#If you want to have private key on your local, uncomment this text below
+
+#resource "local_file" "tls_file_id" {
+#  content = tls_private_key.private_key.private_key_pem
+#  filename = "${path.module}/id_rsa_do"
+#  file_permission = "0600"
+#}
