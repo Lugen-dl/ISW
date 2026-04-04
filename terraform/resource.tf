@@ -46,7 +46,7 @@ module "vpc" {
   source = "./module/vpc"
 }
 
-module "loadblancer" {
+module "loadbalancer" {
   source = "./module/loadbalancer"
   tag = digitalocean_tag.master_tag.id
 }
