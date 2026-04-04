@@ -28,12 +28,12 @@ variable "registry_name" {
   default = true
 }
 
-variable "secret" {
+variable "s3_secret" {
   default = true
   sensitive = true
 }
 
-variable "access" {
+variable "s3_access" {
   type = string
   default = true
 }

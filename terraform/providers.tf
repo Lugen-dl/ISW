@@ -11,4 +11,9 @@ terraform {
   }
 }
 
+provider "digitalocean" {
+  token = var.do_token
+  spaces_access_id = var.s3_access
+  spaces_secret_key = var.s3_secret
+}
 
