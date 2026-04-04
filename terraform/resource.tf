@@ -61,8 +61,13 @@ resource "digitalocean_tag" "master_tag" {
   name = var.tagging
 }
 
-output "ip" {
+output "droplet_ip" {
   value = digitalocean_droplet.web.ipv4_address
+}
+
+output "private_key" {
+  value = tls_private_key.private_key.private_key_pem
+  sensitive = true
 }
 
 data "http" "http_id" {
