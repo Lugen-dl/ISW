@@ -24,7 +24,13 @@ module "firewall" {
   ld_id = module.loadblancer.lb_id
 }
 
-module "s3" {
+module "backend" {
+  source = "./module/s3bucket/s3-backend"
+  tag = var.tagging
+  region = var.region
+}
+
+module "bucket" {
   source = "./module/s3bucket"
   tag = var.tagging
   region = var.region

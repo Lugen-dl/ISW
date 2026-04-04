@@ -14,7 +14,7 @@ resource "digitalocean_spaces_bucket" "bucket_id" {
   acl = "public-read"
 }
 
-#Creating what will be stored in our bucket
+#Creating a FILE that will be stored in our bucket (in this case, ssh-key)
 resource "digitalocean_spaces_bucket_object" "private_key" {
   region = var.region
   bucket = digitalocean_spaces_bucket.bucket_id.name
