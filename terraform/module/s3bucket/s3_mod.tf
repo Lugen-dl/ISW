@@ -9,7 +9,7 @@ terraform {
 
 #Creating our bucket
 resource "digitalocean_spaces_bucket" "bucket_id" {
-  name = "unique-s3-bucket-isw"
+  name = "unique-s3-bucket-isws"
   region = var.region
   acl = "public-read"
 }
