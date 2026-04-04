@@ -3,9 +3,9 @@ on:
     branches:
       - 'master'
     paths:
-      - './terraform/**'
-      - '.github/workflows/**'
-      - './main/**'
+      - 'terraform/**'
+      - './.github/workflows/**'
+      - 'main/**'
   workflow_dispatch:
 
 jobs:
