@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ISW/terraform
+        working-directory: ./terraform
     env:
       TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
       TF_VAR_s3_access: ${{ secrets.S3_ACCESS }}
@@ -44,8 +44,7 @@ jobs:
      
   container-deployment:
     needs: 'server-deploy'
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-latest 
     steps:
       - uses: actions/checkout@v4
 
