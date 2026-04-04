@@ -21,7 +21,7 @@ module "firewall" {
   source = "./module/firewall"
   tag = [ digitalocean_tag.master_tag.id ]
   my_public_ip = trimspace(data.http.http_id.response_body)
-  ld_id = module.loadblancer.lb_id
+  ld_id = module.loadbalancer.lb_id
 }
 
 module "backend" {
