@@ -32,11 +32,12 @@ jobs:
         - run: terraform apply -auto-approve -input=false
 
         - name: Update secrets
+          #Taking raw data after vm starts and creating new secrets
           run: |
             IP=$(terraform output -raw droplet_ip)
             KEY=$(terraform output -raw private_key)
             gh secret set DROPLET_IP --body "$IP"
-            gh secret set SSH_PRIVATE_KEY --boy "$KEY"
+            gh secret set SSH_PRIVATE_KEY --body "$KEY"
           env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
      
