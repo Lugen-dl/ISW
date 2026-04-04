@@ -24,11 +24,6 @@ module "firewall" {
   ld_id = module.loadbalancer.lb_id
 }
 
-module "backend" {
-  source = "./module/s3bucket/s3-backend"
-  tag = var.tagging
-  region = var.region
-}
 
 module "bucket" {
   source = "./module/s3bucket"
