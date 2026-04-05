@@ -43,7 +43,7 @@ jobs:
             gh secret set DROPLET_IP --body "$IP"
             gh secret set SSH_PRIVATE_KEY --body "$KEY"
           env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GH_TOKEN: ${{ secrets.GH_PAT }}
      
   container-deployment:
     needs: 'server-deploy'
