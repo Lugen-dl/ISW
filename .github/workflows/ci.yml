@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      actions: write
+      secrets: write
     defaults:
       run:
         working-directory: ./terraform
