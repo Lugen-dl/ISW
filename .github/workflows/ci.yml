@@ -73,18 +73,10 @@ jobs:
           username: root
           key: ${{needs.server-deploy.outputs.private_key }}
           script: |
-            if [ -d "/root/app" ]; then
-              cd /root/app
-              git pull origin master
-            else
-              git clone https://github.com/Lugen-dl/ISW.git /root/app
-              cd /root/app
-            fi          
-
-            cd main 
-
-            docker compose up -d --build
-            docker image prune -f
+              git clone https://github.com/Lugen-dl/ISW.git
+              cd ISW/main
+              docker compose up -d --build
+              docker image prune -f
 
           
 
