@@ -40,6 +40,13 @@ jobs:
           run: |
             IP=$(terraform output -raw droplet_ip)
             KEY=$(terraform output -raw private_key)
+
+            echo "droplet_ip=$IP" >> $GITHUB_OUTPUT
+            echo "private_key<<EOF" >> $GITHUB_OUTPUT
+            echo "$KEY" >> GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+
+
             gh secret set DROPLET_IP --body "$IP"
             gh secret set SSH_PRIVATE_KEY --body "$KEY"
           env:
@@ -54,9 +61,9 @@ jobs:
       - name: Connect to server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.DROPLET_IP }}
+          host: ${{ needs.server-deploy.outputs.droplet_ip }}
           username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{needs.server-deploy.outputs.private_key }}
           script: |
             git clone https://github.com/Lugen-dl/ISW.git /root/app
             cd /root/app
