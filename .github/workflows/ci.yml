@@ -4,7 +4,7 @@ on:
       - 'master'
     paths:
       - 'terraform/**'
-      - './.github/workflows/**'
+      - '.github/workflows/**'
       - 'main/**'
   workflow_dispatch:
 
@@ -59,7 +59,10 @@ jobs:
      
   container-deployment:
     needs: 'server-deploy'
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./main
     steps:
       - uses: actions/checkout@v4
 
@@ -71,12 +74,18 @@ jobs:
           key: ${{needs.server-deploy.outputs.private_key }}
           script: |
             if [ -d "/root/app" ]; then
-              cd /root/app && git pull
+              cd /root/app
+              git pull origin master
             else
               git clone https://github.com/Lugen-dl/ISW.git /root/app
               cd /root/app
-            ?
+            fi          
+
+            cd main 
+
             docker compose up -d --build
+            docker image prune -f
+
           
 
 
