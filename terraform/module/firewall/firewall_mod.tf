@@ -10,10 +10,17 @@ resource "digitalocean_firewall" "firewall_id" {
   name = "Firewall"
   tags = var.tag
 
-  inbound_rule {
+#Uncomment if you want to connect only with your ip
+#  inbound_rule {
+#    protocol = "tcp"
+#    port_range = "22"
+#    source_addresses = [ "${var.my_public_ip}/32"]
+#  }
+#
+    inbound_rule {
     protocol = "tcp"
     port_range = "22"
-    source_addresses = [ "${var.my_public_ip}/32" ]
+    source_addresses = [ "0.0.0.0/0", "::/0" ]
   }
 
   inbound_rule {
