@@ -11,6 +11,10 @@ on:
 jobs:
   server-deploy:
     runs-on: ubuntu-latest
+    outputs:
+      droplet_ip: ${{ steps.set_outputs.outputs.droplet_ip }}
+      private_key: ${{ steps.set_outputs.outputs.private_key }}
+    
     permissions:
       contents: read
       actions: write
@@ -36,6 +40,7 @@ jobs:
         - run: terraform apply -auto-approve -input=false
 
         - name: Update secrets
+          id: set_outputs
           #Taking raw data after vm starts and creating new secrets
           run: |
             IP=$(terraform output -raw droplet_ip)
@@ -43,12 +48,12 @@ jobs:
 
             echo "droplet_ip=$IP" >> $GITHUB_OUTPUT
             echo "private_key<<EOF" >> $GITHUB_OUTPUT
-            echo "$KEY" >> GITHUB_OUTPUT
+            echo "$KEY" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
 
 
             gh secret set DROPLET_IP --body "$IP"
-            gh secret set SSH_PRIVATE_KEY --body "$KEY"
+            echo "$KEY" | gh secret set SSH_PRIVATE_KEY
           env:
             GH_TOKEN: ${{ secrets.GH_PAT }}
      
@@ -65,10 +70,13 @@ jobs:
           username: root
           key: ${{needs.server-deploy.outputs.private_key }}
           script: |
-            git clone https://github.com/Lugen-dl/ISW.git /root/app
-            cd /root/app
+            if [ -d "/root/app" ]; then
+              cd /root/app && git pull
+            else
+              git clone https://github.com/Lugen-dl/ISW.git /root/app
+              cd /root/app
+            ?
             docker compose up -d --build
-
           
 
 
