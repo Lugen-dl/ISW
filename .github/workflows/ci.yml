@@ -73,10 +73,16 @@ jobs:
           username: root
           key: ${{needs.server-deploy.outputs.private_key }}
           script: |
+<<<<<<< HEAD
               git clone https://github.com/Lugen-dl/ISW.git
               cd ISW/main
               docker compose up -d --build
               docker image prune -f
+=======
+            git clone https://github.com/Lugen-dl/ISW.git
+            docker compose up -d --build
+            docker image prune -f
+>>>>>>> origin/master
 
           
 
