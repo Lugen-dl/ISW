@@ -34,7 +34,7 @@ services:
       - frontend-net
       - backend-net
     environment:
-      - DATABASE_URL=postgresql://user:password@db:5432/db
+      - DATABASE_URL=postgresql://user:password@mydb:5432/db
   
   db:
     build:
