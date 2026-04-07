@@ -75,8 +75,13 @@ jobs:
           script: |
             git clone https://github.com/Lugen-dl/ISW.git
             cd ISW/main
+            
+            echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
+            echo "POSTRGES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+            echo "POSTGRES_password=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+
             docker compose up -d --build
-            docker image prune -f
+          
 
           
 
