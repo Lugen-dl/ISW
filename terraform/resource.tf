@@ -33,7 +33,6 @@ module "bucket" {
   #What will be stored in bucket
   ssh_key = tls_private_key.private_key.private_key_pem
   ssh_path = "keys/id_rsa"
-
 }
 
 module "registry" {
