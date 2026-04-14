@@ -69,7 +69,7 @@ services:
     restart: always
 
   cloudfare:
-    image: cloudfare/cloudflared:latest
+    image: cloudflare/cloudflared:latest
     container_name: cloudflared
     command: tunnel run
     env_file:
