@@ -8,7 +8,7 @@ terraform {
 }
 
 resource "digitalocean_loadbalancer" "load_id" {
-  name = "loadblancer"
+  name = "loadbalancer"
   region = "fra1"
   droplet_tag = var.tag
 
