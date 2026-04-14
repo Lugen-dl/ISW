@@ -5,7 +5,7 @@ resource "digitalocean_domain" "domain_rn" {
 }
 # Giving created domain it id (this mostly need to configure your domain settings)
 resource "cloudflare_zone" "my_domain" {
-  account_id = var.cloudflare_api
+  account_id = var.cloudflare_id
   zone = "my-cool-test-site.com"
 }
 
