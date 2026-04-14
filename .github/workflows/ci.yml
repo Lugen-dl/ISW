@@ -1,5 +1,5 @@
 on:
-  push:
+  pull_request:
     branches:
       - 'master'
     paths:
@@ -25,6 +25,7 @@ jobs:
       TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
       TF_VAR_s3_access: ${{ secrets.S3_ACCESS }}
       TF_VAR_s3_secret: ${{ secrets.S3_SECRET }}
+      TF_VAR_cloudflare_api: ${{ secrets.CLOUDFLARE_API }}
 
     steps:
         - name: Checkout code
@@ -78,8 +79,9 @@ jobs:
             
             echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
             echo "POSTRGES_USER=${{ secrets.POSTGRES_USER }}" >> .env
-            echo "POSTGRES_password=${{ secrets.POSTGRES_PASSWORD }}" >> .env
-
+            echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+            echo "CLOUDFARE_DOMAIN"=${{ secrets.DOCKER_TUNNEL }} >> .env
+            
             docker compose up -d --build
           
 
