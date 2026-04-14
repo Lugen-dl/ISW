@@ -5,9 +5,9 @@
 #}
 # Giving created domain it id (this mostly need to configure your domain settings)
 
-resource "cloudflare_zone" "my_domain" {
+data "cloudflare_zone" "my_domain" {
   account_id = var.cloudflare_id
-  zone = "isw-pet-project.site"
+  name =  "isw-pet-project.site"
 }
 
 #Создаем новую запись что бы компьютер знал куда перевести
