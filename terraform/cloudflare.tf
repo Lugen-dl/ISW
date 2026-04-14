@@ -13,7 +13,7 @@ data "cloudflare_zone" "my_domain" {
 #Создаем новую запись что бы компьютер знал куда перевести
 #пользователя если он введет ://my-cool-test-site.com
 resource "cloudflare_record" "www" {
-  zone_id = cloudflare_zone.my_domain.id #what name of domain using
+  zone_id = data.cloudflare_zone.my_domain.id #what name of domain using
   name = "@" #name of sub-domain
   type = "A" #ipv-4 type
   proxied = true #creating free ssl for protection
