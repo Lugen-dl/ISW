@@ -4,8 +4,10 @@ services:
       context: ./dashboard
       dockerfile: Dockerfile
     container_name: ISW
-    ports:
-      - "5480:5480"
+    #ports: If you want your container listen host ports
+    #  - "5480:5480"
+    expose:
+      - "5480" #Now, only containers could see and know about this port ignoring local connection
     networks:
       - frontend-net
     environment:
@@ -65,6 +67,18 @@ services:
       timeout: 5s
       retries: 5
     restart: always
+
+  cloudfare:
+    image: cloudfare/cloudflared:2024.12.1
+    container_name: cloudflared
+    network_mode: host
+    command: tunnel run
+    env_file:
+      - .env
+    networks:
+      - frontend-net
+    restart: always
+    
 
 volumes:
   redis-vol:
