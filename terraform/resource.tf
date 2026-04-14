@@ -16,41 +16,6 @@ snap install doctl
 _EOF_
 }
 
-
-module "firewall" {
-  source = "./module/firewall"
-  tag = [ digitalocean_tag.master_tag.id ]
-  my_public_ip = trimspace(data.http.http_id.response_body)
-  ld_id = module.loadbalancer.lb_id
-}
-
-
-module "bucket" {
-  source = "./module/s3bucket"
-  tag = var.tagging
-  region = var.region
-
-  #What will be stored in bucket
-  ssh_key = tls_private_key.private_key.private_key_pem
-  ssh_path = "keys/id_rsa"
-}
-
-module "registry" {
-  source = "./module/registry"
-  tag = var.tagging
-  region = var.region
-  name = var.registry_name
-}
-
-module "vpc" {
-  source = "./module/vpc"
-}
-
-module "loadbalancer" {
-  source = "./module/loadbalancer"
-  tag = digitalocean_tag.master_tag.id
-}
-
 resource "digitalocean_tag" "master_tag" {
   name = var.tagging
 }
