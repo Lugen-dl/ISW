@@ -1,8 +1,3 @@
-variable "do_token" {
-  sensitive = true
-  default = true
-}
-
 variable "tagging" {
   type = string
   default = true
@@ -24,16 +19,6 @@ variable "droplet_id" {
 }
 
 variable "registry_name" {
-  type = string
-  default = true
-}
-
-variable "s3_secret" {
-  default = true
-  sensitive = true
-}
-
-variable "s3_access" {
   type = string
   default = true
 }
