@@ -9,16 +9,18 @@ on:
 jobs:
   terraform-destroy:
     runs-on: ubuntu-latest
-    env:
-      TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
-      TF_VAR_s3_access: ${{ secrets.S3_ACCESS }}
-      TF_VAR_s3_secret: ${{ secrets.S3_SECRET }}
+   
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
-        run: terraform init -reconfigure
+        run: terraform init
+        env:
+          TF_VAR_s3_access: ${{ secrets.S3_ACCESS }}
+          TF_VAR_s3_secret: ${{ secrets.S3_SECRET }}
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
+        env:
+          TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
