@@ -35,8 +35,8 @@ services:
     networks:
       - frontend-net
       - backend-net
-    environment:
-      - DATABASE_URL=postgresql://user:password@mydb:5432/db
+    env_file:
+      - .env
   
   db:
     build:
@@ -50,7 +50,7 @@ services:
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      test: ["CMD-SHELL", "pg_isready -U admin"] #check your user in db
       interval: 10s
       timeout: 5s
       retries: 5
@@ -71,7 +71,6 @@ services:
   cloudfare:
     image: cloudfare/cloudflared:2024.12.1
     container_name: cloudflared
-    network_mode: host
     command: tunnel run
     env_file:
       - .env
