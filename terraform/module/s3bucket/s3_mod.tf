@@ -9,7 +9,7 @@ terraform {
 
 #Creating our bucket
 resource "digitalocean_spaces_bucket" "bucket_id" {
-  name = "unique-s3-bucket-iswsv0"
+  name = "unique-s3-bucket-iac-isw"
   region = var.region
   acl = "public-read"
 }
@@ -19,6 +19,16 @@ resource "digitalocean_spaces_bucket_object" "private_key" {
   region = var.region
   bucket = digitalocean_spaces_bucket.bucket_id.name
   key = var.ssh_path
+  content = var.ssh_key
+  content_type = "text/plain"
+  acl = "private"
+}
+
+#Tfvar file for hand-deletion
+resource "digitalocean_spaces_bucket_object" "tfvars" {
+  region = var.region
+  bucket = digitalocean_spaces_bucket.bucket_id.name
+  key = var.ssh_key
   content = var.ssh_key
   content_type = "text/plain"
   acl = "private"
