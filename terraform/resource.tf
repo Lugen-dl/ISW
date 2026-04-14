@@ -6,6 +6,7 @@ resource "digitalocean_droplet" "web" {
 
     ssh_keys = [ digitalocean_ssh_key.default.id ]
     tags = [ var.tagging ]
+    vpc_uuid = module.vpc.vpc_uuid
   
 user_data = <<-_EOF_
 #!/bin/bash
