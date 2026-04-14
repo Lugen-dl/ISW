@@ -71,7 +71,7 @@ services:
   cloudfare:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
-    command: tunnel run
+    command: tunnel run --token ${TUNNEL_TOKEN}
     env_file:
       - .env
     networks:
