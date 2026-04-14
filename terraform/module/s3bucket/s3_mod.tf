@@ -9,7 +9,7 @@ terraform {
 
 #Creating our bucket
 resource "digitalocean_spaces_bucket" "bucket_id" {
-  name = "unique-s3-bucket-iac-isw1"
+  name = "unique-s3-bucket-iac-isw2"
   region = var.region
   acl = "public-read"
 }
@@ -29,7 +29,7 @@ resource "digitalocean_spaces_bucket_object" "tfvars" {
   region = var.region
   bucket = digitalocean_spaces_bucket.bucket_id.name
   key = "terraform.tfvars"
-  source = "terraform.tfvars"
+  source = "keys/terraform.tfvars"
   content_type = "text/plain"
   acl = "private"
 }
