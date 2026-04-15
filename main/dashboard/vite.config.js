@@ -9,6 +9,7 @@ export default defineConfig({
     open: false,
     // Required for Docker
     host: '0.0.0.0',
+    allowedHosts: ['www.isw-pet-project.site', 'isw-pet-project.site'], 
   },
   build: {
     outDir: '../dist/client',
