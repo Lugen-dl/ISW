@@ -79,10 +79,10 @@ jobs:
             cd ISW/main
             
             echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
-            echo "POSTRGES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+            echo "POSTRGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
             echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
             echo "DATABASE_URL"=${{ secrets.DATABASE_URL }} >> .env
-            echo "CLOUDFARE_DOMAIN"=${{ secrets.DOCKER_TUNNEL }} >> .env
+            echo "TUNNEL_TOKEN"=${{ secrets.DOCKER_TUNNEL }} >> .env
             
             docker compose up -d --build
           
