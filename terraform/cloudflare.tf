@@ -4,9 +4,7 @@
 #  ip_address = digitalocean_droplet.web.ipv4_address
 #}
 # Giving created domain it id (this mostly need to configure your domain settings)
-
 data "cloudflare_zone" "my_domain" {
-  account_id = var.cloudflare_id
   name =  "isw-pet-project.site"
 }
 
