@@ -37,7 +37,7 @@ jobs:
         
         - name: Deploying Infrastructure
 
-          run: terraform init -reconfigure -backend-config=module/s3/backend.hcl
+          run: terraform init -reconfigure
         - run: terraform plan -input=false
         - run: terraform apply -auto-approve -input=false
 
