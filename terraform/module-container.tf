@@ -6,16 +6,6 @@ module "firewall" {
   ld_id = module.loadbalancer.lb_id
 }
 
-#Bucket for containing variables
-module "bucket" {
-  source = "./module/s3bucket"
-  tag = var.tagging
-  region = var.region
-
-  #What will be stored in bucket
-  ssh_key = tls_private_key.private_key.private_key_pem
-  ssh_path = "keys/id_rsa"
-}
 #Registry for docker imagest
 module "registry" {
   source = "./module/registry"
