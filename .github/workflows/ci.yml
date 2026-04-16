@@ -31,12 +31,12 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v4
 
-        - uses: digitalocean/action-doctl@v2
-          with:
-            token: ${{ secrets.DO_TOKEN }}
-
         - name: Create Space for Backend
-          run: doctl spaces bucket create "my-unique-state-name" --region ams3 || echo "Bucket already exists"
+          run: |
+              aws s3api create-bucket \
+              --bucket "my-unique-state-name" \
+              --endpoint-url "https://digitaloceanspaces.com" \
+              --region "us-east-1" || echo "Bucket already exists"
 
 
         - name: Setup terraform
