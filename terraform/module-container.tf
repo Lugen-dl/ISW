@@ -22,3 +22,9 @@ module "loadbalancer" {
   source = "./module/loadbalancer"
   tag = digitalocean_tag.master_tag.id
 }
+
+module "s3bucket" {
+  source = "./module/s3spaces"
+  bucket_name = "my-unique-terraform-state-2024"
+  region      = "ams3"
+}
