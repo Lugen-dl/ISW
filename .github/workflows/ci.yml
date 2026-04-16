@@ -23,11 +23,10 @@ jobs:
         working-directory: ./terraform
     env:
       TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
-      TF_VAR_s3_access: ${{ secrets.S3_ACCESS }}
-      TF_VAR_s3_secret: ${{ secrets.S3_SECRET }}
       TF_VAR_cloudflare_api: ${{ secrets.CLOUDFLARE_API }}
       TF_VAR_cloudflare_id: ${{ secrets.CLOUDFLARE_ID }}
-
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
     steps:
         - name: Checkout code
           uses: actions/checkout@v4
