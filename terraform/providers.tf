@@ -19,7 +19,7 @@ terraform {
     key = "keys/terraform.tfstate"
     region = "us-east-1"
 
-    endpoint =  "https://digitaloceanspaces.com"
+    endpoint =  "https://ams3.digitaloceanspaces.com"
 
     skip_credentials_validation = true
     skip_metadata_api_check = true
