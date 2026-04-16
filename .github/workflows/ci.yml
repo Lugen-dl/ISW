@@ -37,7 +37,7 @@ jobs:
         
         - name: Deploying Infrastructure
 
-          run: terraform init -reconfigure
+          run: terraform init -reconfigure -backend-config=s3/backend.hcl
         - run: terraform plan -input=false
         - run: terraform apply -auto-approve -input=false
 
@@ -79,10 +79,10 @@ jobs:
             cd ISW/main
             
             echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
-            echo "POSTRGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+            echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
             echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
-            echo "DATABASE_URL"=${{ secrets.DATABASE_URL }} >> .env
-            echo "TUNNEL_TOKEN"=${{ secrets.DOCKER_TUNNEL }} >> .env
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+            echo "TUNNEL_TOKEN=${{ secrets.DOCKER_TUNNEL }}" >> .env
             
             docker compose up -d --build
           
