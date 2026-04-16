@@ -36,7 +36,7 @@ jobs:
             token: ${{ secrets.DO_TOKEN }}
 
         - name: Create Space for Backend
-          run: doctl compute spaces bucket create "my-unique-state-name" --region ams3 || echo "Bucket already exists"
+          run: doctl spaces bucket create "my-unique-state-name" --region ams3 || echo "Bucket already exists"
 
 
         - name: Setup terraform
