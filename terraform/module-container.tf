@@ -13,6 +13,7 @@ module "firewall" {
 #  region = var.region
 #  name = var.registry_name
 #}
+
 #Our local data storage in private network
 module "vpc" {
   source = "./module/vpc"
