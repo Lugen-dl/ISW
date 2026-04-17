@@ -23,7 +23,7 @@ jobs:
       - name: Terraform Init
         run: |
           terraform init \
-            -backend-config="bucket=my-unique-state-name" \
+            -backend-config="bucket=isw-aws-spaces-tfstate" \
             -backend-config="endpoint=https://ams3.digitaloceanspaces.com" \
             -backend-config="key=keys/terraform.tfstate" \
             -backend-config="region=us-east-1" \
@@ -35,7 +35,7 @@ jobs:
         
       - name: Terraform destroy s3
         run: |
-          aws s3 rm s3://my-unique-state-name --recursive \
+          aws s3 rm s3://isw-aws-spaces-tfstate --recursive \
           --endpoint-url https://ams3.digitaloceanspaces.com
           aws s3api delete-bucket --bucket my-unique-state-name \
           --endpoint-url https://ams3.digitaloceanspaces.com
