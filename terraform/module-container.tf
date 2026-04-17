@@ -7,12 +7,12 @@ module "firewall" {
 }
 
 #Registry for docker imagest
-module "registry" {
-  source = "./module/registry"
-  tag = var.tagging
-  region = var.region
-  name = var.registry_name
-}
+#module "registry" {
+#  source = "./module/registry"
+#  tag = var.tagging
+#  region = var.region
+#  name = var.registry_name
+#}
 #Our local data storage in private network
 module "vpc" {
   source = "./module/vpc"
