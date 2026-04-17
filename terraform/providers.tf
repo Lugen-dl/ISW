@@ -15,7 +15,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "my-unique-state-name"
+    bucket = "isw-aws-spaces-tfstate"
     key = "keys/terraform.tfstate"
     region = "us-east-1"
 

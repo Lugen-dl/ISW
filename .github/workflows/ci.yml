@@ -37,7 +37,7 @@ jobs:
               AWS_DEFAULT_REGION: us-east-1
           run: |
               aws s3api create-bucket \
-              --bucket "my-unique-state-name" \
+              --bucket "isw-aws-spaces-tfstate" \
               --endpoint-url "https://ams3.digitaloceanspaces.com" \
               --region "us-east-1" || echo "Bucket already exists"
 
