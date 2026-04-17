@@ -9,16 +9,36 @@ on:
 jobs:
   terraform-destroy:
     runs-on: ubuntu-latest
+
+    env:
+      TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+
    
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
-        run: terraform init
-        env:
-          TF_VAR_s3_access: ${{ secrets.S3_ACCESS }}
-          TF_VAR_s3_secret: ${{ secrets.S3_SECRET }}
+        run: |
+          terraform init \
+            -backend-config="bucket=my-unique-state-name" \
+            -backend-config="endpoint=https://ams3.digitaloceanspaces.com" \
+            -backend-config="key=keys/terraform.tfstate" \
+            -backend-config="region=us-east-1" \
+            -backend-config="skip_credentials_validation=true" \
+            -backend-config="skip_metadata_api_check=true" \
+            -backend-config="skip_requesting_account_id=true" \
+            -backend-config="skip_region_validation=true" \
+            -backend-config="force_path_style=true"
+        
+      - name: Terraform destroy s3
+        run: |
+          aws s3 rm s3://my-unique-state-name --recursive \
+          --endpoint-url https://ams3.digitaloceanspaces.com
+          aws s3api delete-bucket --bucket my-unique-state-name \
+          --endpoint-url https://ams3.digitaloceanspaces.com
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
