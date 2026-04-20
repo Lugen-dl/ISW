@@ -1,11 +1,4 @@
-on:
-  pull_request:
-    branches:
-      - 'master'
-    paths:
-      - 'terraform/**'
-      - '.github/workflows/**'
-      - 'main/**'
+on: 
   workflow_dispatch:
 
 jobs:
