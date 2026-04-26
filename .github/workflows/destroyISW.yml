@@ -32,9 +32,9 @@ jobs:
         
       - name: Terraform destroy s3
         run: |
-          aws s3 rm s3://isw-aws-spaces-tfstate --recursive \
+          aws s3 rm isw-aws-spaces-tfstate --recursive \
           --endpoint-url https://ams3.digitaloceanspaces.com
-          aws s3api delete-bucket --bucket my-unique-state-name \
+          aws s3api delete-bucket isw-aws-spaces-tfstate \
           --endpoint-url https://ams3.digitaloceanspaces.com
 
       - name: Terraform Destroy
