@@ -3,7 +3,7 @@ on:
 
 jobs:
 
-  build:
+  pre-code-checkout:
     runs-on: ubuntu-24.04
     steps:
     - name: Checkout code
