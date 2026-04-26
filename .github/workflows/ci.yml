@@ -16,6 +16,7 @@ jobs:
         scan-ref: './'
   
   server-deploy:
+    needs: 'pre-code-checkout'
     runs-on: ubuntu-latest
     outputs:
       droplet_ip: ${{ steps.set_outputs.outputs.droplet_ip }}
