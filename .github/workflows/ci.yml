@@ -2,6 +2,19 @@ on:
   workflow_dispatch:
 
 jobs:
+
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Trivy vuln checkout
+      uses: aquasecurity/trivy-action@v0.36.0
+      with:
+        scan-type: 'fs'
+        scan-ref: './'
+  
   server-deploy:
     runs-on: ubuntu-latest
     outputs:
@@ -86,14 +99,12 @@ jobs:
             echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
             echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-            echo "TUNNEL_TOKEN=${{ secrets.DOCKER_TUNNEL }}" >> .env
-            
+            echo "TUNNEL_TOKEN=${{ secrets.DOCKER_TUNNEL }}" >> .env 
+
             docker compose up -d --build
-          
-
-          
 
 
+                    
 #  registry-login:
 #    needs: 'server-deploy'
 #    runs-on: ubuntu-latest
