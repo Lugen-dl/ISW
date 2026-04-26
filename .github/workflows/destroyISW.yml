@@ -19,7 +19,7 @@ jobs:
 
       - name: Terraform Init
         run: |
-          terraform init \
+          terraform init -reconfigure \
             -backend-config="bucket=isw-aws-spaces-tfstate" \
             -backend-config="endpoint=https://ams3.digitaloceanspaces.com" \
             -backend-config="key=keys/terraform.tfstate" \
